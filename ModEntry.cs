@@ -3,15 +3,16 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using WatcherMod.Models.Characters;
+using WatcherMod.Patches;
 
 [ModInitializer("Initialize")]
 public class ModEntry
 {
     public static void Initialize()
     {
-        //ModelDb.Inject(typeof(Insight));
-
         var harmony = new Harmony("watchermod.patch");
+
+        ProgressSaveManagerCustomCharPatch.Apply(harmony);
         harmony.PatchAll();
     }
 }

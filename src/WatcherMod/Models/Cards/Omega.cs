@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using WatcherMod.Models.Powers;
 
@@ -10,6 +11,8 @@ namespace WatcherMod.Models.Cards;
 
 public sealed class Omega() : CardModel(3, CardType.Power, CardRarity.Token, TargetType.None)
 {
+    public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(50m, ValueProp.Move)

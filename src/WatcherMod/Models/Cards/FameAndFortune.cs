@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using WatcherMod.src.WatcherMod.Models.Cards.@as;
 
@@ -10,6 +12,7 @@ namespace WatcherMod.Models.Cards;
 
 public sealed class FameAndFortune() : WishModel(-1, CardType.Skill, CardRarity.Token, TargetType.None)
 {
+    public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
     protected override IEnumerable<DynamicVar> CanonicalVars => [new GoldVar(25)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

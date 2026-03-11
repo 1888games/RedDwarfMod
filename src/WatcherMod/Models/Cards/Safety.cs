@@ -3,12 +3,15 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace WatcherMod.Models.Cards;
 
 public sealed class Safety() : CardModel(1, CardType.Status, CardRarity.Token, TargetType.Self)
 {
+    public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new BlockVar(12m, ValueProp.Move)

@@ -3,8 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using WatcherMod.Commands;
-using WatcherMod.Models.Stances;
+using MegaCrit.Sts2.Core.Rooms;
 
 namespace WatcherMod.Models.Powers;
 
@@ -26,9 +25,12 @@ public sealed class RushdownPower : PowerModel
         ChangeStanceCmd.StanceChanged -= OnStanceChanged;
     }
 
-    /// <summary>
-    ///     Draw cards when entering Wrath.
-    /// </summary>
+    public override async Task AfterCombatEnd(CombatRoom room)
+    {
+        await base.AfterCombatEnd(room);
+        ChangeStanceCmd.StanceChanged -= OnStanceChanged;
+    }
+
     private async Task OnStanceChanged(Creature creature, PlayerChoiceContext? context)
     {
         if (creature != Owner)

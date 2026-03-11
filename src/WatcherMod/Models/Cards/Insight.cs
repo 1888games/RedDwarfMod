@@ -3,11 +3,14 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.CardPools;
 
 namespace WatcherMod.Models.Cards;
 
 public sealed class Insight() : CardModel(0, CardType.Skill, CardRarity.Token, TargetType.None)
 {
+    public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(2) // Scry amount
