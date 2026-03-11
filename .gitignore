@@ -1,0 +1,21 @@
+# Godot 4+ specific ignores
+.godot/
+.nomedia
+.vs/
+
+# Godot-specific ignores
+.import/
+export.cfg
+export_credentials.cfg
+*.tmp
+*.uid
+*.import
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+images/relics/old/
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json

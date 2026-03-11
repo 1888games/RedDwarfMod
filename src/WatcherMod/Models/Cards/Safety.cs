@@ -1,0 +1,33 @@
+﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
+
+namespace WatcherMod.Models.Cards;
+
+public sealed class Safety() : CardModel(1, CardType.Status, CardRarity.Token, TargetType.Self)
+{
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new BlockVar(12m, ValueProp.Move)
+    ];
+
+
+    public override HashSet<CardKeyword> CanonicalKeywords =>
+    [
+        CardKeyword.Retain,
+        CardKeyword.Exhaust
+    ];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+    }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Block.UpgradeValueBy(4m);
+    }
+}
