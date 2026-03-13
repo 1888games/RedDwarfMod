@@ -34,9 +34,7 @@
 		<Content Include="images\**\*.*;scenes\**\*.*;materials\**\*.*;WatcherMod\localization\**\*.json">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
-		<Content Include="src\Core\**">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Content>
+		<Content Include="src\Core\**" Exclude="src\Core\**\*.uid" />
 		<Content Include="mod.props" />
 		<Content Include="local.props" />
 		<Content Include="mod_manifest.json" />

@@ -1,19 +1,13 @@
-﻿using Godot;
-using HarmonyLib;
+﻿using HarmonyLib;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 
-[HarmonyPatch(typeof(NMerchantCharacter))]
-public static class NMerchantCharacterPatch
+[HarmonyPatch(typeof(NMerchantCharacter), nameof(NMerchantCharacter.PlayAnimation))]
+public class NMerchantCharacterPatch
 {
-    // Patch the PlayAnimation method
-    [HarmonyPrefix]
-    [HarmonyPatch(nameof(NMerchantCharacter.PlayAnimation))]
-    public static bool PlayAnimation_Prefix(NMerchantCharacter __instance, string anim, bool loop)
+    public static bool Prefix(NMerchantCharacter __instance)
     {
-        if (__instance.GetChildCount() == 0)
-            return false; // skip original method
-
-        var child = __instance.GetChild(0) as Node2D;
-        return child != null && child.GetClass() == "SpineSprite";
+        var node = __instance.GetChild(0);
+        return node is MegaSprite;
     }
 }

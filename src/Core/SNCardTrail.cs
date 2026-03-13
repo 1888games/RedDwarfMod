@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 namespace WatcherMod.Core;
