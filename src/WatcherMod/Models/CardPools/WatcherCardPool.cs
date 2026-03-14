@@ -81,7 +81,7 @@ public sealed class WatcherCardPool : CardPoolModel
             ModelDb.Card<WindmillStrike>(),
             ModelDb.Card<Worship>(),
             ModelDb.Card<WreathOfFlame>(),
-            ModelDb.Card<AncientCard>(),
+            ModelDb.Card<Alpha>(),
             ModelDb.Card<Blasphemy>(),
             ModelDb.Card<Brilliance>(),
             ModelDb.Card<ConjureBlade>(),

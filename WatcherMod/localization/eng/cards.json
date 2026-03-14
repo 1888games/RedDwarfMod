@@ -259,6 +259,6 @@
   "WISH_WATCHER.selectionScreenPrompt": "Choose a Card to play.",
 
   "ANCIENT_CARD.title": "Ancient Card",
-  "ANCIENT_CARD.description": "This is a placeholder card used for testing. It does nothing."
+  "ANCIENT_CARD.description": "This card is a placeholder so that Darv doesn't crash. Don't pick it; an ancient card might be added later."
 
 }
