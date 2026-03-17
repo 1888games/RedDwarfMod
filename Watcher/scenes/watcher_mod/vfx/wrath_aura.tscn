@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://chrybgjj06cj2"]
 
-[ext_resource type="Script" path="res://Code/Stances/WrathGlowSparkSpawner.cs" id="1_spark"]
-[ext_resource type="Script" path="res://Code/Stances/WrathActivationBurst.cs" id="2_burst"]
-[ext_resource type="Script" path="res://Code/Stances/AuraBlobEmitter.cs" id="3_blobs"]
+[ext_resource type="Script" uid="uid://3xwbqe5jvw10" path="res://Code/Stances/Vfx/WrathGlowSparkSpawner.cs" id="1_spark"]
+[ext_resource type="Script" uid="uid://bt3ndmn5684ew" path="res://Code/Stances/Vfx/WrathActivationBurst.cs" id="2_burst"]
+[ext_resource type="Script" uid="uid://lu7usvkljwkr" path="res://Code/Stances/Vfx/AuraBlobEmitter.cs" id="3_blobs"]
 
 [node name="WrathAura" type="Node2D"]
 

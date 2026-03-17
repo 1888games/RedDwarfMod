@@ -1,17 +1,17 @@
 using Godot;
 using MegaCrit.Sts2.Core.Helpers;
 
-namespace Watcher.Code.Stances;
+namespace Watcher.Code.Stances.Vfx;
 
 [GlobalClass]
 public partial class ScreenFlashEffect : CanvasLayer
 {
     private const float FadeInDuration = 0.12f;
     private const float FlashDuration = 0.7f;
-
-    private TextureRect _tex = null!;
     private float _elapsed;
     private Color _flashColor;
+
+    private TextureRect _tex = null!;
 
     public static void Play(Color color)
     {
@@ -53,9 +53,10 @@ public partial class ScreenFlashEffect : CanvasLayer
         }
         else
         {
-            float fadeOut = (_elapsed - FadeInDuration) / (FlashDuration - FadeInDuration);
+            var fadeOut = (_elapsed - FadeInDuration) / (FlashDuration - FadeInDuration);
             alpha = 1f - fadeOut * fadeOut;
         }
+
         _tex.Modulate = new Color(_flashColor.R, _flashColor.G, _flashColor.B, alpha);
     }
 }

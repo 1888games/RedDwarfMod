@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://u2pogvbv8n7v"]
 
-[ext_resource type="Script" path="res://Code/Stances/DivinityEyeSpawner.cs" id="1_eyes"]
-[ext_resource type="Script" path="res://Code/Stances/DivinityActivationBurst.cs" id="2_burst"]
-[ext_resource type="Script" path="res://Code/Stances/AuraBlobEmitter.cs" id="3_blobs"]
+[ext_resource type="Script" uid="uid://b8biumt0c52d" path="res://Code/Stances/Vfx/DivinityEyeSpawner.cs" id="1_eyes"]
+[ext_resource type="Script" uid="uid://bkomx7o6n4m6x" path="res://Code/Stances/Vfx/DivinityActivationBurst.cs" id="2_burst"]
+[ext_resource type="Script" uid="uid://lu7usvkljwkr" path="res://Code/Stances/Vfx/AuraBlobEmitter.cs" id="3_blobs"]
 
 [node name="DivinityAura" type="Node2D"]
 

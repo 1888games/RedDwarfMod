@@ -12,11 +12,10 @@ namespace Watcher.Code.Stances;
 public class DivinityStance : StancePower
 {
     protected override string AuraScenePath => "res://Watcher/scenes/watcher_mod/vfx/divinity_aura.tscn";
-    protected override Color? BodyTint => new Color(1.1f, 0.7f, 1.4f, 1f);
-    protected override string EyeTexturePath => "res://Watcher/images/watcher_parts/eye_divinity.png";
+    protected override Color? BodyTint => new Color(1.1f, 0.7f, 1.4f);
     protected override string EnterSfxPath => "res://Watcher/audio/divinity_enter.ogg";
     protected override string AmbienceLoopPath => "res://Watcher/audio/divinity_loop.ogg";
-    protected override Color? ScreenFlashColor => new Color(0.8f, 0.3f, 1f, 1f);
+    protected override Color? ScreenFlashColor => new Color(0.8f, 0.3f, 1f);
     protected override ShakeStrength ScreenShakeStrength => ShakeStrength.Strong;
 
     public override Task OnEnterStance(Creature creature)

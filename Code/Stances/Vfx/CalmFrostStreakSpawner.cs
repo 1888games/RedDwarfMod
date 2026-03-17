@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Watcher.Code.Stances;
+namespace Watcher.Code.Stances.Vfx;
 
 [GlobalClass]
 public partial class CalmFrostStreakSpawner : Node2D
@@ -9,27 +9,13 @@ public partial class CalmFrostStreakSpawner : Node2D
     private const float MinLifetime = 1.1f;
     private const float MaxLifetime = 1.7f;
 
-    private struct StreakData
-    {
-        public Sprite2D Sprite;
-        public float Age;
-        public float Lifetime;
-        public float VelocityX;
-        public float VelocityY;
-        public float AccelX;
-        public float AccelY;
-        public Color BaseColor;
-        public float BaseScale;
-        public bool RenderBehind;
-    }
-
-    private readonly System.Collections.Generic.List<StreakData> _streaks = new();
-    private float _spawnTimer;
-    private RandomNumberGenerator _rng = null!;
+    private readonly List<StreakData> _streaks = [];
     private CanvasItemMaterial _mat = null!;
-    private Texture2D _texture = null!;
-    private bool _stopping;
+    private RandomNumberGenerator _rng = null!;
     private float _s;
+    private float _spawnTimer;
+    private bool _stopping;
+    private Texture2D _texture = null!;
 
     public override void _Ready()
     {
@@ -41,18 +27,21 @@ public partial class CalmFrostStreakSpawner : Node2D
         _mat = new CanvasItemMaterial { BlendMode = CanvasItemMaterial.BlendModeEnum.Add };
         _texture = GD.Load<Texture2D>("res://Watcher/images/vfx/frost_streak.png");
 
-        for (int i = 0; i < 15; i++)
+        for (var i = 0; i < 15; i++)
         {
-            float preAge = _rng.RandfRange(0f, MaxLifetime);
+            var preAge = _rng.RandfRange(0f, MaxLifetime);
             SpawnStreak(preAge);
         }
     }
 
-    public void StopSpawning() => _stopping = true;
+    public void StopSpawning()
+    {
+        _stopping = true;
+    }
 
     public override void _Process(double delta)
     {
-        float dt = (float)delta;
+        var dt = (float)delta;
 
         if (!_stopping)
         {
@@ -69,7 +58,7 @@ public partial class CalmFrostStreakSpawner : Node2D
             return;
         }
 
-        for (int i = _streaks.Count - 1; i >= 0; i--)
+        for (var i = _streaks.Count - 1; i >= 0; i--)
         {
             var s = _streaks[i];
             s.Age += dt;
@@ -91,7 +80,7 @@ public partial class CalmFrostStreakSpawner : Node2D
 
             s.Sprite.Rotation = Mathf.Atan2(s.VelocityY, s.VelocityX) + Mathf.Pi * 0.5f;
 
-            float progress = s.Age / s.Lifetime;
+            var progress = s.Age / s.Lifetime;
 
             float yScaleMult;
             if (progress < 0.4f)
@@ -123,21 +112,21 @@ public partial class CalmFrostStreakSpawner : Node2D
         sprite.Texture = _texture;
         sprite.Material = _mat;
 
-        float scale = _rng.RandfRange(0.5f, 1.0f) * _s;
+        var scale = _rng.RandfRange(0.5f, 1.0f) * _s;
 
         sprite.Position = new Vector2(
             _rng.RandfRange(250f, 438f) * _s * (scale / _s),
             _rng.RandfRange(-325f, -125f) * _s
         );
 
-        float vx = _rng.RandfRange(-413f, -288f) * _s;
-        float vy = _rng.RandfRange(225f, 275f) * _s;
+        var vx = _rng.RandfRange(-413f, -288f) * _s;
+        var vy = _rng.RandfRange(225f, 275f) * _s;
 
-        float ax = 75f * (scale / _s) * _s;
-        float ay = -106f * _s;
+        var ax = 75f * (scale / _s) * _s;
+        var ay = -106f * _s;
 
-        float r = _rng.RandfRange(0.2f, 0.3f);
-        float g = _rng.RandfRange(0.65f, 0.8f);
+        var r = _rng.RandfRange(0.2f, 0.3f);
+        var g = _rng.RandfRange(0.65f, 0.8f);
         var baseColor = new Color(r, g, 1.0f, 0f);
         sprite.Modulate = baseColor;
 
@@ -145,7 +134,7 @@ public partial class CalmFrostStreakSpawner : Node2D
 
         sprite.Rotation = Mathf.Atan2(vy, vx) + Mathf.Pi * 0.5f;
 
-        bool behind = _rng.Randf() < (0.2f + ((scale / _s) - 0.5f));
+        var behind = _rng.Randf() < 0.2f + (scale / _s - 0.5f);
         sprite.ZIndex = behind ? -1 : 1;
 
         AddChild(sprite);
@@ -159,9 +148,23 @@ public partial class CalmFrostStreakSpawner : Node2D
             VelocityY = vy,
             AccelX = ax,
             AccelY = ay,
-            BaseColor = new Color(r, g, 1.0f, 1f),
+            BaseColor = new Color(r, g, 1.0f),
             BaseScale = scale,
-            RenderBehind = behind,
+            RenderBehind = behind
         });
+    }
+
+    private struct StreakData
+    {
+        public Sprite2D Sprite;
+        public float Age;
+        public float Lifetime;
+        public float VelocityX;
+        public float VelocityY;
+        public float AccelX;
+        public float AccelY;
+        public Color BaseColor;
+        public float BaseScale;
+        public bool RenderBehind;
     }
 }

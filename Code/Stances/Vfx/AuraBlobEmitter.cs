@@ -1,27 +1,27 @@
 using Godot;
 
-namespace Watcher.Code.Stances;
+namespace Watcher.Code.Stances.Vfx;
 
 [GlobalClass]
 public partial class AuraBlobEmitter : Node2D
 {
-    [Export] public Color BlobColor { get; set; } = new(0.15f, 0f, 0.03f, 1f);
+    [Export] public Color BlobColor { get; set; } = new(0.15f, 0f, 0.03f);
 
     public override void _Ready()
     {
-        float s = StanceVfx.VfxScale;
+        const float s = StanceVfx.VfxScale;
         Position *= s;
 
         var ramp = new Gradient();
-        ramp.Offsets = new[] { 0f, 0.3f, 0.5f, 0.7f, 1f };
-        ramp.Colors = new[]
-        {
+        ramp.Offsets = [0f, 0.3f, 0.5f, 0.7f, 1f];
+        ramp.Colors =
+        [
             new Color(1, 1, 1, 0f),
             new Color(1, 1, 1, 0.6f),
             new Color(1, 1, 1, 0.6f),
             new Color(1, 1, 1, 0.3f),
-            new Color(1, 1, 1, 0f),
-        };
+            new Color(1, 1, 1, 0f)
+        ];
 
         var cpu = new CpuParticles2D();
         cpu.Texture = GD.Load<Texture2D>("res://Watcher/images/vfx/big_blur.png");

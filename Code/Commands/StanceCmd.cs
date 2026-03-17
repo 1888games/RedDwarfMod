@@ -32,7 +32,7 @@ public static class StanceCmd
     private static async Task Execute(Creature creature, StancePower? newStance, CardModel? cardSource)
     {
         // Ensure eye decoration exists (lids visible by default)
-        StancePower.EnsureEyeSetup(creature);
+        //StancePower.EnsureEyeSetup(creature);
 
         var current = creature.Powers.OfType<StancePower>().FirstOrDefault();
 

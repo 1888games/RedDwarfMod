@@ -1,32 +1,24 @@
 using Godot;
 
-namespace Watcher.Code.Stances;
+namespace Watcher.Code.Stances.Vfx;
 
 [GlobalClass]
 public partial class DivinityEyeSpawner : Node2D
 {
     private const float SpawnInterval = 0.2f;
 
-    private struct EyeData
-    {
-        public Sprite2D Sprite;
-        public float Age;
-        public float Lifetime;
-        public float Scale;
-        public Color BaseColor;
-        public float BobSpeed;
-        public float StartY;
-    }
-
-    private readonly System.Collections.Generic.List<EyeData> _eyes = new();
-    private float _spawnTimer;
-    private RandomNumberGenerator _rng = null!;
-    private CanvasItemMaterial _mat = null!;
+    private readonly List<EyeData> _eyes = new();
     private AtlasTexture[] _frames = null!;
-    private bool _stopping;
+    private CanvasItemMaterial _mat = null!;
+    private RandomNumberGenerator _rng = null!;
     private float _s;
+    private float _spawnTimer;
+    private bool _stopping;
 
-    public void StopSpawning() => _stopping = true;
+    public void StopSpawning()
+    {
+        _stopping = true;
+    }
 
     public override void _Ready()
     {
@@ -39,23 +31,23 @@ public partial class DivinityEyeSpawner : Node2D
 
         var strip = GD.Load<Texture2D>("res://Watcher/images/vfx/eye_anim.png");
         _frames = new AtlasTexture[7];
-        for (int i = 0; i < 7; i++)
+        for (var i = 0; i < 7; i++)
         {
             _frames[i] = new AtlasTexture();
             _frames[i].Atlas = strip;
             _frames[i].Region = new Rect2(i * 64, 0, 64, 64);
         }
 
-        for (int i = 0; i < 3; i++)
+        for (var i = 0; i < 3; i++)
         {
-            float preAge = _rng.RandfRange(0f, 2.0f);
+            var preAge = _rng.RandfRange(0f, 2.0f);
             SpawnEye(preAge);
         }
     }
 
     public override void _Process(double delta)
     {
-        float dt = (float)delta;
+        var dt = (float)delta;
 
         if (!_stopping)
         {
@@ -72,7 +64,7 @@ public partial class DivinityEyeSpawner : Node2D
             return;
         }
 
-        for (int i = _eyes.Count - 1; i >= 0; i--)
+        for (var i = _eyes.Count - 1; i >= 0; i--)
         {
             var e = _eyes[i];
             e.Age += dt;
@@ -84,13 +76,13 @@ public partial class DivinityEyeSpawner : Node2D
                 continue;
             }
 
-            float progress = e.Age / e.Lifetime;
+            var progress = e.Age / e.Lifetime;
 
-            int frame = GetEyeFrame(progress);
+            var frame = GetEyeFrame(progress);
             if (frame >= 0 && frame < _frames.Length)
                 e.Sprite.Texture = _frames[frame];
 
-            float bob = GetVerticalBob(progress, e.Scale);
+            var bob = GetVerticalBob(progress, e.Scale);
             e.Sprite.Position = new Vector2(e.Sprite.Position.X, e.StartY + bob);
 
             float alpha;
@@ -124,14 +116,14 @@ public partial class DivinityEyeSpawner : Node2D
 
     private float GetVerticalBob(float progress, float scale)
     {
-        int frame = GetEyeFrame(progress);
-        float bobAmount = frame switch
+        var frame = GetEyeFrame(progress);
+        var bobAmount = frame switch
         {
             0 => 12f,
             1 => 8f,
             2 => 4f,
             3 => 3f,
-            _ => 0f,
+            _ => 0f
         };
         return bobAmount * scale * _s;
     }
@@ -142,20 +134,20 @@ public partial class DivinityEyeSpawner : Node2D
         sprite.Texture = _frames[0];
         sprite.Material = _mat;
 
-        float scale = _rng.RandfRange(1.25f, 1.88f) * _s;
+        var scale = _rng.RandfRange(1.25f, 1.88f) * _s;
         sprite.Scale = new Vector2(scale, scale);
 
-        float px = _rng.RandfRange(-150f, 150f) * _s;
-        float py = _rng.RandfRange(-175f, 75f) * _s;
+        var px = _rng.RandfRange(-150f, 150f) * _s;
+        var py = _rng.RandfRange(-175f, 75f) * _s;
         sprite.Position = new Vector2(px, py);
 
-        float rot = _rng.RandfRange(6f, 12f);
+        var rot = _rng.RandfRange(6f, 12f);
         if (px > 0) rot = -rot;
         sprite.Rotation = Mathf.DegToRad(rot);
 
-        float r = _rng.RandfRange(0.8f, 1.0f);
-        float g = _rng.RandfRange(0.5f, 0.7f);
-        float b = _rng.RandfRange(0.8f, 1.0f);
+        var r = _rng.RandfRange(0.8f, 1.0f);
+        var g = _rng.RandfRange(0.5f, 0.7f);
+        var b = _rng.RandfRange(0.8f, 1.0f);
         var baseColor = new Color(r, g, b, 0f);
         sprite.Modulate = baseColor;
 
@@ -163,7 +155,7 @@ public partial class DivinityEyeSpawner : Node2D
 
         AddChild(sprite);
 
-        float lifetime = scale / _s + 0.8f;
+        var lifetime = scale / _s + 0.8f;
 
         _eyes.Add(new EyeData
         {
@@ -171,9 +163,20 @@ public partial class DivinityEyeSpawner : Node2D
             Age = initialAge,
             Lifetime = lifetime,
             Scale = scale,
-            BaseColor = new Color(r, g, b, 1f),
+            BaseColor = new Color(r, g, b),
             BobSpeed = 1f,
-            StartY = py,
+            StartY = py
         });
+    }
+
+    private struct EyeData
+    {
+        public Sprite2D Sprite;
+        public float Age;
+        public float Lifetime;
+        public float Scale;
+        public Color BaseColor;
+        public float BobSpeed;
+        public float StartY;
     }
 }

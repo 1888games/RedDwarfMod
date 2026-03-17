@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using Watcher.Code.Commands;
 using Watcher.Code.Extensions;
-using Watcher.Code.Stances;
+using Watcher.Code.Stances.Vfx;
 
 namespace Watcher.Code.Powers;
 
@@ -34,6 +34,5 @@ public sealed class MantraPower : CustomPowerModel
         var totalCost = triggers * 10m;
         await PowerCmd.ModifyAmount(this, -totalCost, Owner, cardSource);
         await StanceCmd.EnterDivinity(player.Creature, cardSource);
-
     }
 }

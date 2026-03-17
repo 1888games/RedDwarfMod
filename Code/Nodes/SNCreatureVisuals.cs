@@ -1,13 +1,16 @@
 using Godot;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Nodes.Combat;
-using Watcher.Code.Stances;
 
 namespace Watcher.Code.Nodes;
 
 [GlobalClass]
 public partial class SNCreatureVisuals : NCreatureVisuals
 {
+    private AnimationPlayer? _eyeAnimPlayer;
+    private MegaBone? _eyeBone;
+    private Node2D? _eyeNode;
+    private bool _eyeSetupDone;
 
     public override void _Ready()
     {
@@ -25,13 +28,8 @@ public partial class SNCreatureVisuals : NCreatureVisuals
         else
             Body.Material = premultMat;
 
-        StancePower.EnsureEyeSetup(Body);
+        //StancePower.EnsureEyeSetup(Body);
     }
-
-    private AnimationPlayer? _eyeAnimPlayer;
-    private MegaBone? _eyeBone;
-    private Node2D? _eyeNode;
-    private bool _eyeSetupDone;
 
     public void InitEye(MegaSprite controller)
     {
@@ -70,4 +68,3 @@ public partial class SNCreatureVisuals : NCreatureVisuals
         _eyeAnimPlayer?.Play(stance); // "calm", "divinity", "wrath"
     }
 }
-
