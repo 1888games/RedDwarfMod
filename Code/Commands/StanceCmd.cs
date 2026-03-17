@@ -1,4 +1,4 @@
-﻿using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -31,6 +31,9 @@ public static class StanceCmd
 
     private static async Task Execute(Creature creature, StancePower? newStance, CardModel? cardSource)
     {
+        // Ensure eye decoration exists (lids visible by default)
+        StancePower.EnsureEyeSetup(creature);
+
         var current = creature.Powers.OfType<StancePower>().FirstOrDefault();
 
         if (current?.GetType() == newStance?.GetType() || creature.Player == null)

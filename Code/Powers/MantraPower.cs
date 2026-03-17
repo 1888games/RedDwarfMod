@@ -1,4 +1,4 @@
-﻿using BaseLib.Abstracts;
+using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using Watcher.Code.Commands;
 using Watcher.Code.Extensions;
+using Watcher.Code.Stances;
 
 namespace Watcher.Code.Powers;
 
@@ -17,7 +18,6 @@ public sealed class MantraPower : CustomPowerModel
     public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
     public override string CustomBigIconPath => CustomPackedIconPath;
 
-
     public override async Task AfterPowerAmountChanged(
         PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
@@ -25,11 +25,15 @@ public sealed class MantraPower : CustomPowerModel
         if (power is not MantraPower || amount <= 0 || applier != Owner || player == null)
             return;
 
+        StanceVfx.PlayStanceSfx("res://Watcher/audio/mantra_gain.ogg");
+
+
         var triggers = Amount / 10;
         if (triggers <= 0) return;
 
         var totalCost = triggers * 10m;
         await PowerCmd.ModifyAmount(this, -totalCost, Owner, cardSource);
         await StanceCmd.EnterDivinity(player.Creature, cardSource);
+
     }
 }
