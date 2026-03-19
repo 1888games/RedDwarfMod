@@ -135,7 +135,7 @@ public class Watcher : CustomCharacterModel
         animator.AddAnyState("Relaxed", state5);
 
         var sn = (SNCreatureVisuals)((Node)controller.BoundObject).GetParent();
-        sn.InitEye(controller);
+     //   sn.InitEye(controller);
 
         return animator;
     }

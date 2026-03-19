@@ -54,12 +54,12 @@ public static class StanceCmd
 
         var creatureNode = NCombatRoom.Instance?.GetCreatureNode(creature);
         var visuals = creatureNode?.Visuals as SNCreatureVisuals;
-        visuals?.SetEyeStance(newStance switch
-        {
-            WrathStance => "wrath",
-            CalmStance => "calm",
-            DivinityStance => "divinity",
-            _ => "RESET"
-        });
+       // visuals?.SetEyeStance(newStance switch
+       // {
+         //   WrathStance => "wrath",
+         //   CalmStance => "calm",
+          //  DivinityStance => "divinity",
+         //   _ => "RESET"
+        //});
     }
 }
