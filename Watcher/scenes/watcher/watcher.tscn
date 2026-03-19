@@ -1,36 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://kq7dmrg0ygyf"]
+[gd_scene load_steps=3 format=3 uid="uid://kq7dmrg0ygyf"]
 
-[ext_resource type="Script" uid="uid://claogp36kh2hu" path="res://Code/Nodes/SNCreatureVisuals.cs" id="1_se58w"]
-[ext_resource type="PackedScene" uid="uid://d2fagke4q7e0q" path="res://Watcher/animation/watcher_node.tscn" id="2_o1arn"]
-[ext_resource type="PackedScene" uid="uid://b6pjrayk8hfxt" path="res://Watcher/animation/eye/eye_godot.tscn" id="3_vk6fc"]
+[ext_resource type="Script" uid="uid://b5783520xlr2p" path="res://Code/Nodes/SNCreatureVisuals.cs" id="1_se58w"]
+[ext_resource type="Texture2D" uid="uid://d1crl8oodr63k" path="res://Watcher/scenes/watcher/starbug2.png" id="2_se58w"]
 
-[node name="Watcher" type="Node2D"]
+[node name="Defect" type="Node2D"]
 script = ExtResource("1_se58w")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="Visuals" parent="." instance=ExtResource("2_o1arn")]
+[node name="Visuals" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -19.805)
-
-[node name="Eye" parent="Visuals" instance=ExtResource("3_vk6fc")]
-unique_name_in_owner = true
-show_behind_parent = true
-position = Vector2(-146.50206, -245.428)
+position = Vector2(3, -334.99997)
+scale = Vector2(1.225, 1.225)
+texture = ExtResource("2_se58w")
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -65.0
-offset_top = -305.0
-offset_right = 67.0
+offset_left = -125.0
+offset_top = -260.0
+offset_right = 125.0
 mouse_filter = 2
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(3, -181)
+position = Vector2(1, -335)
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-2, -362)
+position = Vector2(5, -619)

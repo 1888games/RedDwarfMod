@@ -23,9 +23,9 @@
 
     <!-- Windows -->
     <PropertyGroup Condition="'$(IsWindows)' == 'true'">
-        <GodotPath Condition="'$(GodotPath)' == ''">C:\Users\lamal\Desktop\Programmieren\sts2mods\MegaDot\MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
+        <GodotPath Condition="'$(GodotPath)' == ''">C:/Programs/Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
         <!-- If on Windows and Slay the Spire 2 is not installed in your default steam library, adjust the following.-->
-        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">D:/SteamLibrary/steamapps</SteamLibraryPath>
+        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">C:\Program Files (x86)\Steam\steamapps</SteamLibraryPath>
 
         <!-- The below should not need to be changed. -->
         <Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
@@ -60,6 +60,7 @@
         <!-- Diasble architecture mismatch warning; mods are ideally built for all platforms (MSIL)
              while your local StS2 version will be for your specific platform. -->
         <NoWarn>$(NoWarn);MSB3270</NoWarn>
+
     </PropertyGroup>
 
     <ItemGroup>
@@ -76,62 +77,60 @@
             <Private>false</Private>
         </Reference>
 
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="0.1.6" PrivateAssets="All"/>
-        <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.0.9"/>
-        <AdditionalFiles Include="Watcher/localization/**/*.json"/>
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="0.1.6" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.0.9" />
+        <AdditionalFiles Include="Watcher/localization/**/*.json" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="Watcher/**"/>
-        <Compile Remove="shaders/**"/>
-        <EmbeddedResource Remove="Watcher/**"/>
-        <EmbeddedResource Remove="shaders/**"/>
+        <Compile Remove="Watcher/**" />
+        <Compile Remove="shaders/**" />
+        <EmbeddedResource Remove="Watcher/**" />
+        <EmbeddedResource Remove="shaders/**" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include=".gitignore"/>
-        <None Include="Watcher.json"/>
-        <None Include="project.godot"/>
-        <None Include="Watcher/**"/>
+        <None Include=".gitignore" />
+        <None Include="Watcher.json" />
+        <None Include="project.godot" />
+        <None Include="Watcher/**" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Watcher\materials\transitions\"/>
+        <Folder Include="Watcher\materials\transitions\" />
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="images\ui\top_panel\character_icon_watcher-watcher_outline.png"/>
-        <Content Include="images\ui\top_panel\character_icon_watcher-watcher_outline.png.import"/>
+        <Content Include="images\ui\top_panel\character_icon_watcher-watcher_outline.png" />
+        <Content Include="images\ui\top_panel\character_icon_watcher-watcher_outline.png.import" />
     </ItemGroup>
 
-
+	
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
-        <Message Text="Copying .dll and manifest to mods folder." Importance="high"/>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Copy SourceFiles="Watcher.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Message Text="Copying BaseLib to mods folder." Importance="high"/>
+        <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+        <Copy SourceFiles="Watcher.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+        <Message Text="Copying BaseLib to mods folder." Importance="high" />
         <ItemGroup>
-            <BaseLibFiles Include="$(NuGetPackageRoot)alchyr.sts2.baselib/**/lib/**/BaseLib.dll;$(NuGetPackageRoot)alchyr.sts2.baselib/**/Content/BaseLib.pck;$(NuGetPackageRoot)alchyr.sts2.baselib/**/Content/BaseLib.json;"/>
+            <BaseLibFiles Include="$(NuGetPackageRoot)alchyr.sts2.baselib/**/lib/**/BaseLib.dll;$(NuGetPackageRoot)alchyr.sts2.baselib/**/Content/BaseLib.pck;$(NuGetPackageRoot)alchyr.sts2.baselib/**/Content/BaseLib.json;" />
         </ItemGroup>
-        <Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/"/>
+        <Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/" />
     </Target>
 
-    <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
-        <Message Text="Exporting Godot .pck to mods folder" Importance="high"/>
+    <Target Name="GodotPublish" AfterTargets="Build" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
+        <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
 
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
-              ContinueOnError="WarnAndContinue"/>
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" />
     </Target>
 
     <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
-        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high"/>
+        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high" />
     </Target>
 
 
     <!-- ── Release packaging ───────────────────────────────────────── -->
     <Target Name="CreateReleaseZip" AfterTargets="GodotPublish" Condition="'$(ReleaseVersion)' != ''">
-        <Message Text="Packaging release $(ReleaseVersion)..." Importance="high"/>
+        <Message Text="Packaging release $(ReleaseVersion)..." Importance="high" />
 
         <PropertyGroup>
             <ZipName>Watcher-release-$(ReleaseVersion).zip</ZipName>
@@ -139,35 +138,35 @@
         </PropertyGroup>
 
         <!-- Create temp folder structure -->
-        <MakeDir Directories="$(TempReleaseDir)\Watcher"/>
-        <MakeDir Directories="$(TempReleaseDir)\BaseLib"/>
+        <MakeDir Directories="$(TempReleaseDir)\Watcher" />
+        <MakeDir Directories="$(TempReleaseDir)\BaseLib" />
 
         <!-- Copy Watcher files -->
-        <Copy SourceFiles="$(ModsPath)Watcher\Watcher.dll" DestinationFolder="$(TempReleaseDir)\Watcher\"/>
-        <Copy SourceFiles="$(ModsPath)Watcher\Watcher.pck" DestinationFolder="$(TempReleaseDir)\Watcher\"/>
-        <Copy SourceFiles="$(ModsPath)Watcher\Watcher.json" DestinationFolder="$(TempReleaseDir)\Watcher\"/>
+        <Copy SourceFiles="$(ModsPath)Watcher\Watcher.dll" DestinationFolder="$(TempReleaseDir)\Watcher\" />
+        <Copy SourceFiles="$(ModsPath)Watcher\Watcher.pck" DestinationFolder="$(TempReleaseDir)\Watcher\" />
+        <Copy SourceFiles="$(ModsPath)Watcher\Watcher.json" DestinationFolder="$(TempReleaseDir)\Watcher\" />
 
         <!-- Copy BaseLib files -->
-        <Copy SourceFiles="$(ModsPath)BaseLib\BaseLib.dll" DestinationFolder="$(TempReleaseDir)\BaseLib\"/>
-        <Copy SourceFiles="$(ModsPath)BaseLib\BaseLib.pck" DestinationFolder="$(TempReleaseDir)\BaseLib\"/>
-        <Copy SourceFiles="$(ModsPath)BaseLib\BaseLib.json" DestinationFolder="$(TempReleaseDir)\BaseLib\"/>
+        <Copy SourceFiles="$(ModsPath)BaseLib\BaseLib.dll" DestinationFolder="$(TempReleaseDir)\BaseLib\" />
+        <Copy SourceFiles="$(ModsPath)BaseLib\BaseLib.pck" DestinationFolder="$(TempReleaseDir)\BaseLib\" />
+        <Copy SourceFiles="$(ModsPath)BaseLib\BaseLib.json" DestinationFolder="$(TempReleaseDir)\BaseLib\" />
 
         <!-- Create zip using PowerShell -->
-        <Exec Command="powershell -Command &quot;Compress-Archive -Path '$(TempReleaseDir)\*' -DestinationPath '$(MSBuildProjectDirectory)\$(ZipName)' -Force&quot;"/>
+        <Exec Command="powershell -Command &quot;Compress-Archive -Path '$(TempReleaseDir)\*' -DestinationPath '$(MSBuildProjectDirectory)\$(ZipName)' -Force&quot;" />
 
         <!-- Cleanup temp folder -->
-        <RemoveDir Directories="$(TempReleaseDir)"/>
+        <RemoveDir Directories="$(TempReleaseDir)" />
 
-        <Message Text="Created $(ZipName)" Importance="high"/>
+        <Message Text="Created $(ZipName)" Importance="high" />
     </Target>
 
     <Target Name="CreateGitHubRelease" AfterTargets="CreateReleaseZip" Condition="'$(ReleaseVersion)' != ''">
-        <Message Text="Tagging and publishing GitHub release $(ReleaseVersion)..." Importance="high"/>
+        <Message Text="Tagging and publishing GitHub release $(ReleaseVersion)..." Importance="high" />
 
-        <Exec Command="git tag $(ReleaseVersion)"/>
-        <Exec Command="git push origin $(ReleaseVersion)"/>
-        <Exec Command="gh release create $(ReleaseVersion) &quot;$(MSBuildProjectDirectory)\Watcher-release-$(ReleaseVersion).zip&quot; --title &quot;Watcher $(ReleaseVersion)&quot; --generate-notes"/>
+        <Exec Command="git tag $(ReleaseVersion)" />
+        <Exec Command="git push origin $(ReleaseVersion)" />
+        <Exec Command="gh release create $(ReleaseVersion) &quot;$(MSBuildProjectDirectory)\Watcher-release-$(ReleaseVersion).zip&quot; --title &quot;Watcher $(ReleaseVersion)&quot; --generate-notes" />
 
-        <Message Text="GitHub release $(ReleaseVersion) published!" Importance="high"/>
+        <Message Text="GitHub release $(ReleaseVersion) published!" Importance="high" />
     </Target>
 </Project>
